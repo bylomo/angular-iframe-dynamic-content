@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { SafePipe } from './pipe/safe/safe.pipe';
+import { SafePipe } from './pipes/safe/safe.pipe';
+import { DynamicContentIframeComponent } from './components/dynamic-content-iframe/dynamic-content-iframe.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SafePipe
+    SafePipe,
+    DynamicContentIframeComponent
   ],
   imports: [
     BrowserModule
