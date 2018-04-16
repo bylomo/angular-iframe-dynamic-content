@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
 import { DynamicContentIframeConfig } from '../../models/DynamicContentIframeConfig';
+import { FrameTime } from '../../models/FrameTime';
 
 @Component({
   selector: 'app-dynamic-content-iframe',
@@ -18,20 +19,28 @@ export class DynamicContentIframeComponent implements OnInit {
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.currentURL = this.config.urls[this.index];
     setInterval(this.intervalCheck.bind(this), this.config.interval);
   }
 
   intervalCheck() {
-    this.index++;
 
-    if (this.index >= this.config.urls.length) {
-      this.index = 0;
+    const curTime = FrameTime.getFrameTime(new Date());
+
+    const curFrame = this.config.getFrame(curTime);
+
+    if (curFrame) {
+      const newURL = curFrame.getURL();
+
+      if (newURL !== this.currentURL) {
+        this.currentURL = newURL;
+        this.changeDetectorRef.markForCheck();
+        console.log('Changed URL to: ' + this.currentURL);
+      } else {
+        console.log('Same url');
+      }
+    } else {
+      console.log('No frame to display');
     }
-
-    this.currentURL = this.config.urls[this.index];
-    this.changeDetectorRef.markForCheck();
-    console.log('Changed URL to: ' + this.currentURL);
   }
 
 }
