@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
-import { WebPagesHubConfig } from '../../models/DynamicContentIframeConfig';
+import { WebPagesHubConfig } from '../../models/WebPagesHubConfig';
 import { FrameTime } from '../../models/FrameTime';
+
+import { WebPagesHubConfigService } from '../../services/WebPagesHubConfig.service';
 
 @Component({
   selector: 'app-dynamic-content-iframe',
@@ -10,16 +12,21 @@ import { FrameTime } from '../../models/FrameTime';
 })
 export class DynamicContentIframeComponent implements OnInit {
 
-  @Input() config: WebPagesHubConfig;
+  private config: WebPagesHubConfig;
 
   private currentURL: string;
 
   private index = 0;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private webPagesHubConfigService: WebPagesHubConfigService) { }
 
   ngOnInit() {
-    setInterval(this.intervalCheck.bind(this), this.config.interval);
+    this.webPagesHubConfigService.getConfig().subscribe((config) => {
+      this.config = config;
+      setInterval(this.intervalCheck.bind(this), this.config.interval);
+    });
   }
 
   intervalCheck() {
