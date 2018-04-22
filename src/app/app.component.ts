@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 
-import { DynamicContentIframeConfig } from './models/DynamicContentIframeConfig';
+import { WebPagesHubConfig } from './models/DynamicContentIframeConfig';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,10 @@ import { DynamicContentIframeConfig } from './models/DynamicContentIframeConfig'
 })
 export class AppComponent implements OnInit {
 
-  private dynamicContentIframeConfig: DynamicContentIframeConfig;
+  private dynamicContentIframeConfig: WebPagesHubConfig;
 
   ngOnInit() {
-    this.dynamicContentIframeConfig = plainToClass(DynamicContentIframeConfig, {
+    this.dynamicContentIframeConfig = plainToClass(WebPagesHubConfig, {
       id: 'test',
       interval: 1000,
       frames: [

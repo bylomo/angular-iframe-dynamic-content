@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
-import { DynamicContentIframeConfig } from '../../models/DynamicContentIframeConfig';
+import { WebPagesHubConfig } from '../../models/DynamicContentIframeConfig';
 import { FrameTime } from '../../models/FrameTime';
 
 @Component({
@@ -10,7 +10,7 @@ import { FrameTime } from '../../models/FrameTime';
 })
 export class DynamicContentIframeComponent implements OnInit {
 
-  @Input() config: DynamicContentIframeConfig;
+  @Input() config: WebPagesHubConfig;
 
   private currentURL: string;
 

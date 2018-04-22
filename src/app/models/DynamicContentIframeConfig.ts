@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { Frame } from './Frame';
 import { FrameTime } from './FrameTime';
 
-export class DynamicContentIframeConfig {
+export class WebPagesHubConfig {
     id: string;
 
     interval: number;
