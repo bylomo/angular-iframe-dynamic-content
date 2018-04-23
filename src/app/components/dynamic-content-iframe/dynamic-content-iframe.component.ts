@@ -16,16 +16,26 @@ export class DynamicContentIframeComponent implements OnInit {
 
   private currentURL: string;
 
-  private index = 0;
+  private REFRESH_CONFIG_INTERVAL = 1000 * 10; // refresh config from server each 10 seconds
+
+  private currentIntervalId: number;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private webPagesHubConfigService: WebPagesHubConfigService) { }
 
   ngOnInit() {
+    setInterval(this.intervalGetConfig.bind(this), this.REFRESH_CONFIG_INTERVAL);
+  }
+
+  intervalGetConfig() {
+    if (this.currentIntervalId) {
+      clearInterval(this.currentIntervalId);
+    }
+
     this.webPagesHubConfigService.getConfig().subscribe((config) => {
       this.config = config;
-      setInterval(this.intervalCheck.bind(this), this.config.interval);
+      this.currentIntervalId = setInterval(this.intervalCheck.bind(this), this.config.interval);
     });
   }
 
