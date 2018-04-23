@@ -22,6 +22,12 @@ export class Frame {
     }
 
     public getURL() {
+        // single url
+        if (this.urls.length === 1) {
+            return this.urls[0].url;
+        }
+
+        // multiple urls
         this.preProcessURLs();
         for (let i = 0; i < this.urls.length; i++) {
             if (this.urls[i].usedInterval < this.urls[i].nInterval) {
@@ -32,8 +38,17 @@ export class Frame {
     }
 
     private preProcessURLs() {
+        this.initUndefinedUsedInterval();
         if (this.isAllIntervalUsed()) {
             this.resetAllIntervalUsed();
+        }
+    }
+
+    private initUndefinedUsedInterval() {
+        for (let i = 0; i < this.urls.length; i++) {
+            if (this.urls[i].usedInterval === undefined) {
+                this.urls[i].usedInterval = 0;
+            }
         }
     }
 
